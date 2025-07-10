@@ -1,0 +1,228 @@
+📘 DOCUMENTATION COMPLÈTE DU BOT TELEFEED
+
+
+---
+
+🔗 Commande : /connect
+
+📘 Explication :
+
+Permet de connecter un numéro de téléphone à TeleFeed pour démarrer les fonctionnalités du bot.
+
+🧠 Réponse du bot si utilisée seule :
+
+Utilisation de /connect :
+
+/connect NUMERO
+
+Exemple :
+/connect 229900112233
+
+Remarque :
+- Ajoutez toujours l'indicatif pays (ex : 229 pour Bénin).
+- Lors de la saisie du code reçu par Telegram, ajoutez 'aa' devant.
+  → Ex : code reçu 12345 → entrer : aa12345
+
+
+---
+
+🔁 Commande : /redirection
+
+📘 Explication :
+
+Permet de créer, modifier, supprimer ou afficher des redirections entre des chats (groupes, canaux, etc).
+
+🧠 Réponse du bot si utilisée seule :
+
+Utilisation de /redirection :
+/redirection add NOM on NUMERO
+/redirection remove NOM on NUMERO
+/redirection change NOM on NUMERO
+/redirection NUMERO ← voir les redirections actives
+
+Exemple :
+/redirection add groupe1 on 229900112233
+
+
+---
+
+🧩 Commande : /transformation
+
+📘 Explication :
+
+Permet d’ajouter des modifications sur le contenu des messages redirigés : format, suppression de mots ou lignes.
+
+🧠 Réponse du bot si utilisée seule :
+
+Utilisation de /transformation :
+/transformation add format|power|removeLines NOM on NUMERO
+/transformation remove ...
+/transformation clear ...
+
+
+---
+
+✅ Commande : /whitelist
+
+📘 Explication :
+
+Indique au bot de ne traiter que les messages contenant certains mots ou regex.
+
+🧠 Réponse du bot si utilisée seule :
+
+Utilisation de /whitelist :
+/whitelist add NOM on NUMERO
+/whitelist remove NOM on NUMERO
+/whitelist change NOM on NUMERO
+/whitelist clear on NUMERO
+
+
+---
+
+⛔ Commande : /blacklist
+
+📘 Explication :
+
+Ignore tous les messages contenant certains mots ou regex.
+
+🧠 Réponse du bot si utilisée seule :
+
+Utilisation de /blacklist :
+/blacklist add NOM on NUMERO
+/blacklist remove NOM on NUMERO
+/blacklist change NOM on NUMERO
+/blacklist clear on NUMERO
+
+
+---
+
+📡 Commande : /chats
+
+📘 Explication :
+
+Affiche tous les chats (utilisateurs, groupes, bots, canaux) associés à un numéro connecté.
+
+🧠 Réponse du bot si utilisée seule :
+
+Utilisation de /chats :
+/chats NUMERO
+/chats user NUMERO
+/chats bot NUMERO
+/chats group NUMERO
+/chats channel NUMERO
+
+
+---
+
+💸 SYSTÈME DE PAIEMENT ET LICENCE
+
+✅ Commandes disponibles pour paiement
+
+/payer une semaine
+/payer un mois
+
+📘 Fonctionnement :
+
+Lorsqu’un utilisateur clique sur une commande /payer, le bot envoie une alerte à l’administrateur contenant :
+
+L'ID de l'utilisateur
+
+Le type d’abonnement demandé (1 semaine ou 1 mois)
+
+
+L’administrateur valide manuellement l’achat
+
+
+🔐 Génération de licence :
+
+Une fois validé, le bot génère automatiquement une licence sous ce format :
+
+[ID_USER] + [moitié de l’ID] + [date] + [heure] + [5 lettres aléatoires]
+
+Exemple :
+
+12345678 + 3456 + 2025-07-07 + 18h30 + QZLBN
+→ Licence : 1234567834562025-07-0718h30QZLBN
+
+✅ Commande : /valide
+
+Permet à l’utilisateur de saisir sa licence pour débloquer les fonctionnalités premium.
+
+Réponse automatique :
+
+Si licence correcte : accès autorisé à /redirection, /transformation, /chats, etc.
+
+Si licence incorrecte ou utilisée par un autre utilisateur :
+
+
+Licence volée ❌
+Cette licence ne vous appartient pas.
+
+
+---
+
+🌍 HÉBERGEMENT SUR RENDER.COM
+
+✅ Étapes du déploiement :
+
+1. Le projet est hébergé via Render.com avec :
+
+main.py comme point d’entrée
+
+Procfile contenant :
+
+worker: python3 main.py
+
+
+
+2. Une fois le projet lancé, le bot reçoit :
+
+
+
+bot déployé avec succès
+
+🔁 Surveillance automatique :
+
+Toutes les 10 à 30 min, Render peut envoyer :
+
+
+Kouamé Appolinaire tu es là ?
+
+Le bot doit répondre :
+
+
+oui bb
+
+📡 Port d’écoute :
+
+Le bot et le système de redirection partagent le même port
+
+Ce port est défini dans Render avec la variable :
+
+
+PORT=10000
+
+📦 Fichiers requis pour Render :
+
+main.py
+bot/
+├── redirection.py
+├── payment.py
+├── license.py
+├── deploy.py
+requirements.txt
+Procfile
+.env
+
+📋 Journalisation & sécurité :
+
+Toutes les actions critiques sont stockées dans :
+
+
+logs/activity.log
+
+Redirections, paiements, tentatives de triche sont loguées.
+
+Optionnel : envoi automatique au canal admin via ID
+
+
